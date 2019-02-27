@@ -1,0 +1,107 @@
+import React, { Component } from 'react';
+import custoService from '../../Services/CustoService';
+import funcionarioService from '../../Services/FuncionarioService';
+import departamentoService from '../../Services/DepartamentoService';
+
+class NovoCusto extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            departamentos: [],
+            funcionarios: [],
+            redirect: false
+        }
+    }
+
+    componentDidMount() {
+        departamentoService.getDepartamentos().then(res =>
+            this.setState({
+                departamentos: res.data
+            })
+        )
+    }
+
+    onChange = () => {        
+        funcionarioService.getFuncionarioByDepartamentoId(this.refs.departamento.value)
+            .then(res => this.setState({
+                funcionarios: res.data
+            }))
+    }
+
+    novoCusto = () => {
+        var custo = {
+            DepartamentoId: this.refs.departamento.value,
+            FuncionarioId: this.refs.funcionario.value,
+            Descricao: this.refs.descricao.value,
+            Valor: this.refs.valor.value,
+        }
+
+        custoService.novoCusto(custo)
+            .then(res =>
+                this.props.getMessages(res.data, 0))
+            .catch(error =>
+                this.props.getMessages(error.response.data, 1)
+            )
+    }
+
+    render() {
+        return (
+            <div>
+                <div className="modal fade" id="modalNovoCusto" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">Nova Despesa</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form>
+                                <div className="modal-body">
+                                    <div className="form-group">
+                                        <label>Departamento</label>
+                                        <select ref='departamento' className='custom-select' onChange={this.onChange} required>
+                                            <option>-</option>
+                                            {this.state.departamentos.map((value) => {
+                                                return (
+                                                    <option key={value.Id} value={value.Id}>{value.Nome}</option>
+                                                )
+                                            })}
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Funcionario</label>
+                                        <select ref='funcionario' className='custom-select' required>
+                                            <option disabled>-</option>
+                                            {this.state.funcionarios.map((value) => {
+                                                return (
+                                                    <option key={value.Id} value={value.Id}>{value.Nome}</option>
+                                                )
+                                            })}
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Descrição</label>
+                                        <input type="text" ref="descricao" className="form-control" placeholder="Ex.: Caneta" required maxLength="500" />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Valor</label>
+                                        <input type="decimal" ref="valor" className="form-control" placeholder="Valor do produto" required />
+                                    </div>
+
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" className="btn btn-primary" onClick={this.novoCusto} data-dismiss="modal">Salvar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+export default NovoCusto;
