@@ -61,9 +61,11 @@ class Funcionario extends Component {
                 <Messages messages={this.state.messages} errors={this.state.errors} />
 
                 <h3 className="text-center mt-4">Funcionários</h3>
+
                 <NovoFuncionario getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
-                <table className="table table-sm table-hover mt-5">
-                    <thead>
+
+               <table className='table table-sm table-hover table-light table-bordered mt-2'>
+                    <thead className="bg-dark text-light">
                         <tr>
                             <th>Id</th>
                             <th>Nome</th>

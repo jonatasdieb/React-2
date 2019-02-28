@@ -61,14 +61,14 @@ class Home extends Component {
 
                 <NovoCusto getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
 
-                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalNovoCusto">
+                <button type="button" className="btn btn-info" data-toggle="modal" data-target="#modalNovoCusto">
                     Nova Despesa
                 </button>
 
-                <FiltroCusto filtrarCustos={(custos) => this.setState({ custos: custos })} />
+                <FiltroCusto filtrarCustos={(custos) => this.setState({ custos: custos, messages: false, errors: false })} />
 
-                <table className='table table-sm table-hover mt-2'>
-                    <thead>
+                <table className='table table-sm table-hover table-light table-bordered mt-2'>
+                    <thead className="bg-dark text-light">
                         <tr>
                             <th>Id</th>
                             <th>Funcionário</th>

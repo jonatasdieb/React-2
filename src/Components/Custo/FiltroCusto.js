@@ -84,7 +84,6 @@ class FiltroCusto extends Component {
         )
     }
 
-
 }
 
 export default FiltroCusto;

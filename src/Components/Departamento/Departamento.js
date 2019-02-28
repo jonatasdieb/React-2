@@ -59,8 +59,8 @@ class Departamento extends Component {
 
                 <NovoDepartamento getMessages={(messages, tipo) => this.showMessages(messages, tipo)}></NovoDepartamento>
 
-                <table className="table table-sm table-hover">
-                    <thead>
+              <table className='table table-sm table-hover table-light table-bordered mt-2'>
+                    <thead className="bg-dark text-light">
                         <tr>
                             <th>Id</th>
                             <th>Nome</th>

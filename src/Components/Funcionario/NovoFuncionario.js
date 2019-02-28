@@ -54,7 +54,7 @@ class NovoFuncionario extends Component {
                         </select>
                     </div>
                     <div className="form-group">&nbsp;
-                    <button type='button' className='btn btn-primary' onClick={this.novoFuncionario}>Salvar</button>
+                    <button type='button' className='btn btn-info' onClick={this.novoFuncionario}>Salvar</button>
                     </div>
                 </form>
             </div>

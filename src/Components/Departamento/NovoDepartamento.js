@@ -28,7 +28,7 @@ class NovoDepartamento extends Component {
                         <label>Novo departamento: &nbsp;</label>
                         <input ref='nome' type="text" className="form-control" placeholder="Nome do departamento" />
                     </div>
-                    &nbsp; <button type="button" onClick={this.novoDepartamento} className="btn btn-primary">Salvar</button>
+                    &nbsp; <button type="button" onClick={this.novoDepartamento} className="btn btn-info">Salvar</button>
                 </form>
             </div>
 
