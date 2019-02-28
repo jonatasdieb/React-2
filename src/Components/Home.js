@@ -26,8 +26,7 @@ class Home extends Component {
             }))
     }
 
-    showMessages = (messages, tipo) => {
-        console.log(messages);
+    showMessages = (messages, tipo) => {       
         if (tipo === 'nok') {
             this.setState({
                 errors: messages,
@@ -86,7 +85,7 @@ class Home extends Component {
                                     <td>{value.Funcionario.Nome}</td>
                                     <td>{value.Departamento.Nome}</td>
                                     <td>{value.Descricao}</td>
-                                    <td>{value.Valor.toFixed(2)}</td>
+                                    <td>R$ {value.Valor.toFixed(2)}</td>
                                 </tr>
                             )
                         }

@@ -15,8 +15,7 @@ class Funcionario extends Component {
         }
     }
 
-    showMessages = (messages, tipo) => {
-        console.log(messages);
+    showMessages = (messages, tipo) => {        
         if (tipo === 'nok') {
             this.setState({
                 errors: messages,
@@ -45,7 +44,7 @@ class Funcionario extends Component {
     componentDidMount() {
         this.setState({
             isLoading: true
-        })
+        })        
 
         funcionarioService.getFuncionarios()
             .then(res =>

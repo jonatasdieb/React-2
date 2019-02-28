@@ -24,8 +24,7 @@ class Departamento extends Component {
             }))
     }
 
-    showMessages = (messages, tipo) => {
-       
+    showMessages = (messages, tipo) => {       
         if (tipo === 'nok') {
             this.setState({
                 errors: messages,
@@ -34,7 +33,6 @@ class Departamento extends Component {
         }
 
         else if (tipo === 'ok') {
-
             this.setState({
                 errors: false,
                 messages: messages,
@@ -54,9 +52,13 @@ class Departamento extends Component {
     render() {
         return (
             <div>
+                
                 <Messages messages={this.state.messages} errors={this.state.errors} />
+
                 <h3 className="text-center mt-4">Departamentos</h3>
+
                 <NovoDepartamento getMessages={(messages, tipo) => this.showMessages(messages, tipo)}></NovoDepartamento>
+
                 <table className="table table-sm table-hover">
                     <thead>
                         <tr>

@@ -29,7 +29,7 @@ class NovoCusto extends Component {
             }))
     }
 
-    novoCusto = () => {
+    novoCusto = () => {        
         var custo = {
             DepartamentoId: this.refs.departamento.value,
             FuncionarioId: this.refs.funcionario.value,
@@ -44,11 +44,11 @@ class NovoCusto extends Component {
                 this.props.getMessages(error.response.data, "nok")
             )
 
-            //limpa formulário
-            this.refs.departamento.value = '';
-            this.refs.funcionario.value = ''
-            this.refs.descricao.value = '';
-            this.refs.valor.value = '';
+        //limpa formulário
+        this.refs.departamento.value = '';
+        this.refs.funcionario.value = ''
+        this.refs.descricao.value = '';
+        this.refs.valor.value = '';
     }
 
     render() {

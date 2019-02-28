@@ -1,5 +1,5 @@
 import axios from 'axios';
-var url = 'http://bolaoarte-001-site3.htempurl.com';
+var url = 'http://localhost:3001';
 
 const api = axios.create({
     baseURL: url,
