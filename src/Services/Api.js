@@ -1,5 +1,5 @@
 import axios from 'axios';
-var url = 'http://localhost:3001';
+var url = 'http://nodejs-lanlink.herokuapp.com';
 
 const api = axios.create({
     baseURL: url,
