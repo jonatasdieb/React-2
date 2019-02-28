@@ -9,10 +9,20 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <nav className="navbar bg-dark">
-            <Link className="nav-link text-light" to='/'>Home</Link>
-            <Link className="nav-link text-light" to='/departamento'>Departamentos</Link>
-            <Link className="nav-link text-light" to='/funcionario'>Funcionários</Link>
+          <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+            <div className="collapse navbar-collapse">
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item active">
+                  <Link className="nav-link text-light" to='/'>Home</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-light" to='/departamento'>Departamentos</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-light" to='/funcionario'>Funcionários</Link>
+                </li>
+              </ul>
+            </div>
           </nav>
 
           <Route exact path='/' component={Home} />

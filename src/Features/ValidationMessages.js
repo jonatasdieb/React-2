@@ -15,7 +15,7 @@ class ValidationMessages extends Component {
                     <div className="text-danger">
                         <ul>
                             {this.props.errors.map((value, index) =>
-                                <li key={index}><b>{value.ErrorMessage}</b></li>
+                                <li key={index}><b>{value}</b></li>
                             )}
                         </ul>
                     </div>

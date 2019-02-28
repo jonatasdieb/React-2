@@ -8,12 +8,12 @@ class FiltroCusto extends Component {
 
         this.state = {
             tipoFiltro: false,
-            custoFiltro: [],           
+            custoFiltro: [],
         }
     }
 
     /*Atualiza campo de pesquisa de acordo 
-      com tipo de filtro escolhido pelo usuário*/  
+      com tipo de filtro escolhido pelo usuário*/
     onChange = () => {
         if (this.refs.filtro.value === 'descricao') {
             this.setState({
@@ -35,10 +35,17 @@ class FiltroCusto extends Component {
                 .then(res => this.props.filtrarCustos(res.data))
         }
         else if (this.state.tipoFiltro === 'descricao') {
-            custoService.getCustoByDescricao(this.refs.descricao.value)
-                .then(res => this.props.filtrarCustos(res.data))
+
+            //se a descricao for vazia, retornará todos os custos
+            if (this.refs.descricao.value === '') {
+                custoService.getCustos()
+                    .then(res => this.props.filtrarCustos(res.data))
+            } else {
+                custoService.getCustoByDescricao(this.refs.descricao.value)
+                    .then(res => this.props.filtrarCustos(res.data))
+            }
         }
-        
+
         else {
             funcionarioService.getCustos()
                 .then(res => this.props.filtrarCustos(res.data))

@@ -25,39 +25,49 @@ class Home extends Component {
                 isLoading: false
             }))
     }
-     
+
     showMessages = (messages, tipo) => {
-        if (tipo === 1) {
+        console.log(messages);
+        if (tipo === 'nok') {
             this.setState({
-                errors: messages
+                errors: messages,
+                messages: false
             })
         }
-        else if (tipo === 0) {
+
+        else if (tipo === 'ok') {            
             this.setState({
+                errors: false,
                 messages: messages,
                 isLoading: true
             })
-            custoService.getCustos()
-                .then(res =>
-                    this.setState({
-                        custos: res.data,
-                        isLoading: false
-                    })
-                )
         }
+        
+        custoService.getCustos()
+            .then(res =>
+                this.setState({
+                    custos: res.data,
+                    tipoFiltro: false,
+                    isLoading: false
+                })
+            )
     }
 
     render() {
         return (
             <div>
                 <Messages messages={this.state.messages} errors={this.state.errors} />
-                <h3 className="text-center mt-5">Despesas</h3>
-                <NovoCusto  getMessages={(messages, tipo) => this.showMessages(messages, tipo)}/>
+
+                <h3 className="text-center mt-4">Despesas</h3>
+
+                <NovoCusto getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
+
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#modalNovoCusto">
                     Nova Despesa
                 </button>
-                
-                <FiltroCusto filtrarCustos={(custos) => this.setState({custos: custos})}/>
+
+                <FiltroCusto filtrarCustos={(custos) => this.setState({ custos: custos })} />
+
                 <table className='table table-sm table-hover mt-2'>
                     <thead>
                         <tr>

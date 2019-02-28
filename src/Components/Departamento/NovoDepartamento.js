@@ -11,10 +11,13 @@ class NovoDepartamento extends Component {
 
         api.novoDepartamento(departamento)
             .then(res =>
-                this.props.getMessages(res.data, 0))
+                this.props.getMessages(res.data, "ok"))
             .catch(error =>
-                this.props.getMessages(error.response.data, 1)
+                this.props.getMessages(error.response.data, "nok")
             )
+
+        //limpa formulário
+        this.refs.nome.value = '';
     }
 
     render() {

@@ -22,7 +22,7 @@ class NovoCusto extends Component {
         )
     }
 
-    onChange = () => {        
+    onChange = () => {
         funcionarioService.getFuncionarioByDepartamentoId(this.refs.departamento.value)
             .then(res => this.setState({
                 funcionarios: res.data
@@ -39,10 +39,16 @@ class NovoCusto extends Component {
 
         custoService.novoCusto(custo)
             .then(res =>
-                this.props.getMessages(res.data, 0))
+                this.props.getMessages(res.data, "ok"))
             .catch(error =>
-                this.props.getMessages(error.response.data, 1)
+                this.props.getMessages(error.response.data, "nok")
             )
+
+            //limpa formulário
+            this.refs.departamento.value = '';
+            this.refs.funcionario.value = ''
+            this.refs.descricao.value = '';
+            this.refs.valor.value = '';
     }
 
     render() {
@@ -62,7 +68,7 @@ class NovoCusto extends Component {
                                     <div className="form-group">
                                         <label>Departamento</label>
                                         <select ref='departamento' className='custom-select' onChange={this.onChange} required>
-                                            <option>-</option>
+                                            <option value=''>-</option>
                                             {this.state.departamentos.map((value) => {
                                                 return (
                                                     <option key={value.Id} value={value.Id}>{value.Nome}</option>
@@ -73,7 +79,7 @@ class NovoCusto extends Component {
                                     <div className="form-group">
                                         <label>Funcionario</label>
                                         <select ref='funcionario' className='custom-select' required>
-                                            <option disabled>-</option>
+                                            <option value=''>-</option>
                                             {this.state.funcionarios.map((value) => {
                                                 return (
                                                     <option key={value.Id} value={value.Id}>{value.Nome}</option>
@@ -87,7 +93,7 @@ class NovoCusto extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>Valor</label>
-                                        <input type="decimal" ref="valor" className="form-control" placeholder="Valor do produto" required />
+                                        <input type="number" ref="valor" className="form-control" placeholder="Valor do produto" required />
                                     </div>
 
                                 </div>

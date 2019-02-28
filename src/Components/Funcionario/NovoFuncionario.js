@@ -17,11 +17,15 @@ class NovoFuncionario extends Component {
             Nome: this.refs.nome.value,
             DepartamentoId: this.refs.departamento.value
         })
-        .then(res => 
-            this.props.getMessages(res.data, 0))
+        .then(res =>
+            this.props.getMessages(res.data, "ok"))
         .catch(error =>
-            this.props.getMessages(error.response.data, 1)
-            )
+            this.props.getMessages(error.response.data, "nok")
+        )
+
+        //limpa formulários
+        this.refs.nome.value = '';
+        this.refs.departamento.value = '';
     }
 
     componentDidMount() {        
@@ -41,10 +45,10 @@ class NovoFuncionario extends Component {
                     </div>
                     <div className="form-group">                    
                         <select ref='departamento' className='custom-select'>
-                        <option>Selecione um departamento</option>
+                        <option value=''>Selecione um departamento</option>
                             {this.state.departamentos.map((value) => {
                                 return (
-                                <option key={value} value={value.Id}>{value.Nome}</option>
+                                <option key={value.Id} value={value.Id}>{value.Nome}</option>
                                 )
                             })}
                         </select>

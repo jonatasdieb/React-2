@@ -16,16 +16,22 @@ class Funcionario extends Component {
     }
 
     showMessages = (messages, tipo) => {
-        if (tipo === 1) {
+        console.log(messages);
+        if (tipo === 'nok') {
             this.setState({
-                errors: messages
+                errors: messages,
+                messages: false
             })
         }
-        else if (tipo === 0) {
+
+        else if (tipo === 'ok') {
+
             this.setState({
+                errors: false,
                 messages: messages,
                 isLoading: true
             })
+
             funcionarioService.getFuncionarios()
                 .then(res =>
                     this.setState({
@@ -53,9 +59,9 @@ class Funcionario extends Component {
     render() {
         return (
             <div>
-               <Messages messages={this.state.messages} errors={this.state.errors}/>
+                <Messages messages={this.state.messages} errors={this.state.errors} />
 
-                <h3 className="text-center mt-5">Funcionários</h3>
+                <h3 className="text-center mt-4">Funcionários</h3>
                 <NovoFuncionario getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
                 <table className="table table-sm table-hover mt-5">
                     <thead>
