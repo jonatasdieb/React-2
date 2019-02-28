@@ -80,7 +80,7 @@ class Home extends Component {
                     <tbody>
                         {this.state.custos.map((value) => {
                             return (
-                                <tr key={value.Id} className='text-primary'>
+                                <tr key={value.Id}>
                                     <td>{value.Id}</td>
                                     <td>{value.Funcionario.Nome}</td>
                                     <td>{value.Departamento.Nome}</td>
