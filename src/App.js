@@ -20,14 +20,13 @@ class App extends Component {
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link text-light" to='/funcionario'>Funcionários</Link>
-                </li>
+                </li>               
               </ul>
             </div>
           </nav>
-
           <Route exact path='/' component={Home} />
           <Route exact path='/departamento' component={Departamento} />
-          <Route exact path='/funcionario' component={Funcionario} />
+          <Route exact path='/funcionario' component={Funcionario} />          
         </div>
       </Router >
     );
