@@ -7,7 +7,6 @@ import {getUsername} from './Services/AuthService';
 import {logout} from './Services/AuthService';
 
 class App extends Component {
-username = getUsername();
 
 logout(){
     logout();
@@ -18,7 +17,7 @@ logout(){
     return (
       <Router>
         <div>
-        <span className='float right'>Olá, {this.username}! - <a href='#' onClick={this.logout}></a></span>
+        <span className='float right'><a onClick={this.logout}>Logout</a></span>
           <nav className="navbar navbar-expand-lg navbar-light bg-nav">
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">

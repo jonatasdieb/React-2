@@ -18,8 +18,6 @@ class Login extends Component {
             password: this.refs.password.value
         }).then(res =>
             saveToken(res.token)
-        ).then(res =>
-            saveUsername(res.data.username)
         ).then(() =>
             window.location.reload()
         ).catch(() =>
