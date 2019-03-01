@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import NovoDepartamento from './NovoDepartamento';
 import departamentoService from '../../Services/DepartamentoService';
 import Messages from '../../Features/ValidationMessages';
+import Login from '../Autenticacao/Login';
+import { Redirect } from 'react-router-dom';
 
 class Departamento extends Component {
     constructor(props) {
@@ -22,7 +24,10 @@ class Departamento extends Component {
                 departamentos: res.data,
                 isLoading: false
             }))
-            .catch(e => console.log('statuscode capturado:', e.response.status))
+            .catch(e => {
+                if(e.response.status === 401)
+                   <Redirect to={Login} />
+            })
     }
 
     showMessages = (messages, tipo) => {
