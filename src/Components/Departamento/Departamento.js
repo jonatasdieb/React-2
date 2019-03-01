@@ -17,20 +17,21 @@ class Departamento extends Component {
         }
     }
 
-    componentDidMount() {
-        this.setState({ isLoading: true });
+    loadDepartamentos(){
         departamentoService.getDepartamentos()
             .then(res => this.setState({
                 departamentos: res.data,
                 isLoading: false
             }))
             .catch(e => {
-                if(e.response.status === 401) {
-                    window.location.replace("/");
-                } else {
-                    console.log(e.response)
-                }
+                if(e.response.status === 401)
+                    window.location.replace("/")
             })
+    }
+
+    componentDidMount() {
+        this.setState({ isLoading: true });
+        this.loadDepartamentos();
     }
 
     showMessages = (messages, tipo) => {
@@ -48,13 +49,7 @@ class Departamento extends Component {
                 isLoading: true
             })
 
-            departamentoService.getDepartamentos()
-                .then(res =>
-                    this.setState({
-                        departamentos: res.data,
-                        isLoading: false
-                    })
-                )
+            this.loadDepartamentos();
         }
     }
 
