@@ -19,7 +19,7 @@ logout(){
         <div className='row'>
         <a className='float-right' href='#' onClick={this.logout}>Logout</a>
         </div>
-        <div>
+        <div class='row'>
           <nav className="navbar navbar-expand-lg navbar-light bg-nav">
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">
