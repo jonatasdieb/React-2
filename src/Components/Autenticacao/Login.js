@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { login, saveToken, saveUsername } from '../../Services/AuthService';
+import { login, saveToken } from '../../Services/AuthService';
 
 class Login extends Component {
 
@@ -17,7 +17,7 @@ class Login extends Component {
             username: this.refs.username.value,
             password: this.refs.password.value
         }).then(res =>
-            saveToken(res.token)
+            saveToken(res.data.token)
         ).then(() =>
             window.location.reload()
         ).catch(() =>
@@ -53,7 +53,7 @@ class Login extends Component {
                             <input type="password" className="form-control" ref='password' name="senha" id="senha" placeholder="Senha" />
                         </div>
                         <div className="form-group">
-                            <button type="button" className="btn btn-primary" onClick={this.login}>Login</button>
+                            <input type="button" className="btn btn-primary" onClick={this.login} value='Login' />
                         </div>
                     </form>
                 </div>
