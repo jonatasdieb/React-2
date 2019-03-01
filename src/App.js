@@ -17,10 +17,8 @@ class App extends Component {
         return (
             <Router>
                 <div>
-                    <div className='row'>
-                        <a className='float-right' href='#' onClick={this.logout}>Logout</a>
-                    </div>
-                    <div className='row'>
+                        <a href='#' onClick={this.logout}>Logout</a>
+
                         <nav className="navbar navbar-expand-lg navbar-light bg-nav">
                             <div className="collapse navbar-collapse">
                                 <ul className="navbar-nav mr-auto">
