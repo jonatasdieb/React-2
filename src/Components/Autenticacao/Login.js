@@ -53,7 +53,7 @@ class Login extends Component {
                             <input type="password" className="form-control" ref='password' name="senha" id="senha" placeholder="Senha" />
                         </div>
                         <div className="form-group">
-                            <input type="button" className="btn btn-primary" onClick={this.login} value='Login' />
+                            <button type="button" className="btn btn-primary" onClick={this.login}>Login</button>
                         </div>
                     </form>
                 </div>
