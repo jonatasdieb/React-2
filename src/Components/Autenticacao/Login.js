@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { login, saveToken } from '../../Services/AuthService';
+import { login, saveData } from '../../Services/AuthService';
 
 class Login extends Component {
 
