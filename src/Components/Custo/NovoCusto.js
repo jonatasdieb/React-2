@@ -18,24 +18,22 @@ class NovoCusto extends Component {
         departamentoService.getDepartamentos().then(res =>
             this.setState({
                 departamentos: res.data
+            }))
+            .catch(e => {
+                if (e.response.status === 401)
+                    window.location.replace("/")
             })
-                .catch(e => {
-                    if (e.response.status === 401)
-                        window.location.replace("/")
-                })
-        )
     }
 
     onChange = () => {
         funcionarioService.getFuncionarioByDepartamentoId(this.refs.departamento.value)
             .then(res => this.setState({
                 funcionarios: res.data
+            }))
+            .catch(e => {
+                if (e.response.status === 401)
+                    window.location.replace("/")
             })
-                .catch(e => {
-                    if (e.response.status === 401)
-                        window.location.replace("/")
-                })
-            )
     }
 
     novoCusto = () => {
