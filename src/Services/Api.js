@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getToken } from './AuthService';
 
-var url = 'http://localhost:3001';
+var url = 'https://nodejs-lanlink.herokuapp.com/';
 
 const api = axios.create({
     baseURL: url,
