@@ -17,7 +17,7 @@ class Login extends Component {
             username: this.refs.username.value,
             password: this.refs.password.value
         }).then(res =>
-            console.log('chegou aqui', res.data)//saveData(res.data)
+            saveData(res.data)
         ).then(() =>
             window.location.reload()
         ).catch(() =>

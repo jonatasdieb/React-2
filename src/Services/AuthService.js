@@ -6,9 +6,9 @@ export const login = (user) => api.post('User/Login', user)
 export const isAuthenticated = () => api.get('/')//localStorage.getItem(TOKEN_KEY) !== null;
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 export const getUsername = () => localStorage.getItem(USERNAME);
-export const saveData = data => {
-  localStorage.setItem(TOKEN_KEY, data.token);
-  localStorage.setItem(USERNAME, data.username)
+export const saveData = res => {
+  localStorage.setItem(TOKEN_KEY, res.token);
+  localStorage.setItem(USERNAME, res.data.username)
 };
 export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);
