@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { login, saveData, saveUsername } from '../../Services/AuthService';
+import { login, saveToken, saveUsername } from '../../Services/AuthService';
 
 class Login extends Component {
 
@@ -17,7 +17,7 @@ class Login extends Component {
             username: this.refs.username.value,
             password: this.refs.password.value
         }).then(res =>
-            saveData(res.token)
+            saveToken(res.token)
         ).then(res =>
             saveUsername(res.data.username)
         ).then(() =>
