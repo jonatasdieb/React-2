@@ -60,7 +60,7 @@ class Home extends Component {
     render() {
         return (
             <div>
-                
+
                 <Messages messages={this.state.messages} errors={this.state.errors} />
 
                 <h3 className="text-center mt-4">Despesas</h3>
@@ -68,7 +68,7 @@ class Home extends Component {
                 <NovoCusto getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
 
                 <button type="button" className="btn btn-info" data-toggle="modal" data-target="#modalNovoCusto">
-                    Nova Despesa
+                    Nova Despesa <i class="fas fa-dollar-plus text-white"></i>
                 </button>
 
                 <FiltroCusto filtrarCustos={(custos) => this.setState({ custos: custos, messages: false, errors: false })} />

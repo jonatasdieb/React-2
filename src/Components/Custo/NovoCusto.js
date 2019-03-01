@@ -105,8 +105,8 @@ class NovoCusto extends Component {
 
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                    <button type="submit" className="btn btn-primary" onClick={this.novoCusto} data-dismiss="modal">Salvar</button>
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar <i class="fas fa-times-circle text-white"></i></button>
+                                    <button type="submit" className="btn btn-primary" onClick={this.novoCusto} data-dismiss="modal">Salvar <i class="fas fa-check text-white"></i></button>
                                 </div>
                             </form>
                         </div>
