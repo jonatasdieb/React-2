@@ -25,8 +25,11 @@ class Departamento extends Component {
                 isLoading: false
             }))
             .catch(e => {
-                if(e.response.status === 401)
-                   <Redirect to={Login} />
+                if(e.response.status === 401) {
+                    window.location.replace("/");
+                } else {
+                    console.log(e.response)
+                }
             })
     }
 
