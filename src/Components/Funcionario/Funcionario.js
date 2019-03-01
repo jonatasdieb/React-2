@@ -59,6 +59,7 @@ class Funcionario extends Component {
     render() {
         return (
             <div>
+
                 <Messages messages={this.state.messages} errors={this.state.errors} />
 
                 <h3 className="text-center mt-4">Funcionários</h3>

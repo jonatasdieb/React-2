@@ -12,9 +12,13 @@ class NovoDepartamento extends Component {
         api.novoDepartamento(departamento)
             .then(res =>
                 this.props.getMessages(res.data, "ok"))
-            .catch(error =>
-                this.props.getMessages(error.response.data, "nok")
-            )
+            .catch(error => {
+                if (error.response.status === 401) {
+                    window.location.replace("/")
+                } else {
+                    this.props.getMessages(error.response.data, "nok")
+                }
+            })
 
         //limpa formulário
         this.refs.nome.value = '';

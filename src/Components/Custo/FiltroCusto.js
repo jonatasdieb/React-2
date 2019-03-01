@@ -12,7 +12,44 @@ class FiltroCusto extends Component {
         }
     }
 
-    /*Atualiza campo de pesquisa de acordo 
+    loadCustos() {
+        custoService.getCustos()
+            .then(res => this.props.filtrarCustos(res.data))
+            .catch(e => {
+                if (e.response.status === 401)
+                    window.location.replace("/")
+            })
+    }
+
+    loadCustoByDescricao(descricao) {
+        custoService.getCustoByDescricao(descricao)
+            .then(res => this.props.filtrarCustos(res.data))
+            .catch(e => {
+                if (e.response.status === 401)
+                    window.location.replace("/")
+            })
+    }
+
+    loadCustoByFuncionarioId(id) {
+        custoService.getCustoByFuncionarioId(id)
+            .then(res => this.props.filtrarCustos(res.data))
+            .catch(e => {
+                if (e.response.status === 401)
+                    window.location.replace("/")
+            })
+    }
+
+    loadFuncionarios() {
+        funcionarioService.getFuncionarios().then(res => this.setState({
+            tipoFiltro: 'funcionario',
+            custoFiltro: res.data
+        })).catch(e => {
+            if (e.response.status === 401)
+                window.location.replace("/")
+        })
+    }
+
+    /*Atualiza campo de pesquisa de acordo
       com tipo de filtro escolhido pelo usuário*/
     onChange = () => {
         if (this.refs.filtro.value === 'descricao') {
@@ -21,34 +58,26 @@ class FiltroCusto extends Component {
             })
         }
         else if (this.refs.filtro.value === 'funcionario') {
-            funcionarioService.getFuncionarios().then(res => this.setState({
-                tipoFiltro: 'funcionario',
-                custoFiltro: res.data
-            }))
+            this.loadFuncionarios();
         }
     }
 
     filtrar = () => {
         if (this.state.tipoFiltro === 'funcionario') {
             console.log(this.refs.filtroId.value);
-            custoService.getCustoByFuncionarioId(this.refs.filtroId.value)
-                .then(res => this.props.filtrarCustos(res.data))
+            this.loadCustoByFuncionarioId(this.refs.filtroId.value)
         }
         else if (this.state.tipoFiltro === 'descricao') {
 
             //se a descricao for vazia, retornará todos os custos
             if (this.refs.descricao.value === '') {
-                custoService.getCustos()
-                    .then(res => this.props.filtrarCustos(res.data))
+                this.loadCustos();
             } else {
-                custoService.getCustoByDescricao(this.refs.descricao.value)
-                    .then(res => this.props.filtrarCustos(res.data))
+                this.loadCustoByDescricao(this.refs.descricao.value);
             }
         }
-
         else {
-            funcionarioService.getCustos()
-                .then(res => this.props.filtrarCustos(res.data))
+            this.loadCustos();
         }
     }
 

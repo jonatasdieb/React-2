@@ -19,6 +19,10 @@ class NovoCusto extends Component {
             this.setState({
                 departamentos: res.data
             })
+            .catch(e => {
+                if(e.response.status === 401)
+                    window.location.replace("/")
+            })
         )
     }
 
@@ -26,10 +30,13 @@ class NovoCusto extends Component {
         funcionarioService.getFuncionarioByDepartamentoId(this.refs.departamento.value)
             .then(res => this.setState({
                 funcionarios: res.data
-            }))
+            })).catch(e => {
+                if(e.response.status === 401)
+                    window.location.replace("/")
+            })
     }
 
-    novoCusto = () => {        
+    novoCusto = () => {
         var custo = {
             DepartamentoId: this.refs.departamento.value,
             FuncionarioId: this.refs.funcionario.value,
