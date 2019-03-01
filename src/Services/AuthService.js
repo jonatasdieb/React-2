@@ -7,7 +7,6 @@ export const isAuthenticated = () => api.get('/')//localStorage.getItem(TOKEN_KE
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 export const getUsername = () => localStorage.getItem(USERNAME);
 export const saveData = data => {
-    console.log('chegou no savedata: ',data);
   localStorage.setItem(TOKEN_KEY, data.token);
   localStorage.setItem(USERNAME, data.username)
 };
