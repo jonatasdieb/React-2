@@ -22,9 +22,10 @@ class Departamento extends Component {
                 departamentos: res.data,
                 isLoading: false
             }))
+            .catch(e => console.log('statuscode capturado:', e.response.status))
     }
 
-    showMessages = (messages, tipo) => {       
+    showMessages = (messages, tipo) => {
         if (tipo === 'nok') {
             this.setState({
                 errors: messages,
@@ -52,7 +53,7 @@ class Departamento extends Component {
     render() {
         return (
             <div>
-                
+
                 <Messages messages={this.state.messages} errors={this.state.errors} />
 
                 <h3 className="text-center mt-4">Departamentos</h3>
