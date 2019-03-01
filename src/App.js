@@ -17,29 +17,28 @@ class App extends Component {
         return (
             <Router>
                 <div>
-                        <a href='#' onClick={this.logout}>Logout</a>
+                    <a href='#' onClick={this.logout}>Logout</a>
 
-                        <nav className="navbar navbar-expand-lg navbar-light bg-nav">
-                            <div className="collapse navbar-collapse">
-                                <ul className="navbar-nav mr-auto">
-                                    <li className="nav-item active">
-                                        <Link className="nav-link text-light" to='/'><i class="fas fa-dollar-sign text-white"></i> Despesas</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link text-light" to='/departamento'><i class="fas fa-briefcase text-white"></i> Departamentos</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link className="nav-link text-light" to='/funcionario'><i class="fas fa-users text-white"></i> Funcionários</Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>
-                        <Route exact path='/' component={Home} />
-                        <Route exact path='/departamento' component={Departamento} />
-                        <Route exact path='/funcionario' component={Funcionario} />
-                    </div>
+                    <nav className="navbar navbar-expand-lg navbar-light bg-nav">
+                        <div className="collapse navbar-collapse">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item active">
+                                    <Link className="nav-link text-light" to='/'><i class="fas fa-dollar-sign text-white"></i> Despesas</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link text-light" to='/departamento'><i class="fas fa-briefcase text-white"></i> Departamentos</Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link text-light" to='/funcionario'><i class="fas fa-users text-white"></i> Funcionários</Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <Route exact path='/' component={Home} />
+                    <Route exact path='/departamento' component={Departamento} />
+                    <Route exact path='/funcionario' component={Funcionario} />
                 </div>
-            </Router >
+            </Router>
         );
     }
 }
