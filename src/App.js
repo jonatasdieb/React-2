@@ -20,7 +20,7 @@ class App extends Component {
                     <div className='row'>
                         <a className='float-right' href='#' onClick={this.logout}>Logout</a>
                     </div>
-                    <div class='row'>
+                    <div className='row'>
                         <nav className="navbar navbar-expand-lg navbar-light bg-nav">
                             <div className="collapse navbar-collapse">
                                 <ul className="navbar-nav mr-auto">
