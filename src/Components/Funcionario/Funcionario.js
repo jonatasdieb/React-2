@@ -15,7 +15,20 @@ class Funcionario extends Component {
         }
     }
 
-    showMessages = (messages, tipo) => {        
+    loadFuncionarios(){
+         funcionarioService.getFuncionarios()
+                .then(res =>
+                    this.setState({
+                        funcionarios: res.data,
+                        isLoading: false
+                    })
+                )
+                .catch(e => {
+                    if (e.response.status === 401)
+                        window.location.replace("/")
+                })
+    }
+    showMessages = (messages, tipo) => {
         if (tipo === 'nok') {
             this.setState({
                 errors: messages,
@@ -31,28 +44,16 @@ class Funcionario extends Component {
                 isLoading: true
             })
 
-            funcionarioService.getFuncionarios()
-                .then(res =>
-                    this.setState({
-                        funcionarios: res.data,
-                        isLoading: false
-                    })
-                )
+           this.loadFuncionarios();
         }
     }
 
     componentDidMount() {
         this.setState({
             isLoading: true
-        })        
+        })
 
-        funcionarioService.getFuncionarios()
-            .then(res =>
-                this.setState({
-                    funcionarios: res.data,
-                    isLoading: false
-                })
-            )
+        this.loadFuncionarios();
     }
 
     render() {
@@ -64,7 +65,7 @@ class Funcionario extends Component {
 
                 <NovoFuncionario getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
 
-               <table className='table table-sm table-hover table-light table-bordered mt-2'>
+                <table className='table table-sm table-hover table-light table-bordered mt-2'>
                     <thead className="bg-dark text-light">
                         <tr>
                             <th>Id</th>

@@ -17,32 +17,8 @@ class Home extends Component {
         }
     }
 
-    componentDidMount() {
-        this.setState({ isLoading: true });
-        custoService.getCustos()
-            .then(res => this.setState({
-                custos: res.data,
-                isLoading: false
-            }))
-    }
-
-    showMessages = (messages, tipo) => {       
-        if (tipo === 'nok') {
-            this.setState({
-                errors: messages,
-                messages: false
-            })
-        }
-
-        else if (tipo === 'ok') {            
-            this.setState({
-                errors: false,
-                messages: messages,
-                isLoading: true
-            })
-        }
-        
-        custoService.getCustos()
+    loadCustos(){
+          custoService.getCustos()
             .then(res =>
                 this.setState({
                     custos: res.data,
@@ -50,6 +26,35 @@ class Home extends Component {
                     isLoading: false
                 })
             )
+            .catch(e => {
+                if(e.response.status === 401)
+                    window.location.replace("/")
+            })
+    }
+
+    componentDidMount() {
+        this.setState({ isLoading: true });
+        this.loadCustos();
+    }
+
+    showMessages = (messages, tipo) => {
+        if (tipo === 'nok') {
+            this.setState({
+                errors: messages,
+                messages: false
+            })
+        }
+
+        else if (tipo === 'ok') {
+            this.setState({
+                errors: false,
+                messages: messages,
+                isLoading: true
+            })
+        }
+
+        this.loadCustos();
+
     }
 
     render() {

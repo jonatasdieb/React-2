@@ -1,16 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Login from './Components/Autenticacao/Login';
-import { isAuthenticated } from './Services/AuthService';
 import * as serviceWorker from './serviceWorker';
 
-    isAuthenticated()
-    .then(() => {
-        ReactDOM.render(<App />, document.getElementById('root'));
-    }).catch(() => {
-        ReactDOM.render(<Login />, document.getElementById('root'));
-    })
+ReactDOM.render(<App />, document.getElementById('root'));
+
 
 
 
