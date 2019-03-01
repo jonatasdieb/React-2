@@ -6,18 +6,18 @@ class Login extends Component {
     constructor(props){
         super(props);
 
-        this.state = { 
+        this.state = {
                 messages: false,
                 errors: false
             }
-        }    
+        }
 
     login = () => {
         login({
             username: this.refs.username.value,
             password: this.refs.password.value
         }).then(res =>
-            saveToken(res.data.token)
+            saveData(res.data)
         ).then(() =>
             window.location.reload()
         ).catch(() =>
@@ -29,7 +29,7 @@ class Login extends Component {
 
     render() {
         return (
-            <section>    
+            <section>
                 <div className="row justify-content-md-center">
                 {this.state.errors &&
                 <div className="text-danger">
