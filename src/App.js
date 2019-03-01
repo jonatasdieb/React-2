@@ -17,7 +17,7 @@ logout(){
     return (
       <Router>
         <div>
-        <span className='float right'><a onClick={this.logout}>Logout</a></span>
+        <div className='float right'><a className='float-right' href='#' onClick={this.logout}>Logout</a></div>
           <nav className="navbar navbar-expand-lg navbar-light bg-nav">
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">
