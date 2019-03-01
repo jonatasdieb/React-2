@@ -60,7 +60,7 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <i class="fas fa-igloo"></i>
+                
                 <Messages messages={this.state.messages} errors={this.state.errors} />
 
                 <h3 className="text-center mt-4">Despesas</h3>
