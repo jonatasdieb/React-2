@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+          <nav className="navbar navbar-expand-lg navbar-light bg-nav">
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">

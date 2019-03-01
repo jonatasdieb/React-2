@@ -67,7 +67,7 @@ class Funcionario extends Component {
                 <NovoFuncionario getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
 
                 <table className='table table-sm table-hover table-light table-bordered mt-2'>
-                    <thead className="bg-dark text-light">
+                    <thead className="bg-table text-light">
                         <tr>
                             <th>Id</th>
                             <th>Nome</th>

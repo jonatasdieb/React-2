@@ -68,15 +68,14 @@ class Home extends Component {
                 <NovoCusto getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
 
                 <button type="button" className="btn btn-info" data-toggle="modal" data-target="#modalNovoCusto">
-                    Nova Despesa <i class="fas fa-dollar-plus text-white"></i>
+                    Nova Despesa <i class="fas fa-plus text-white"></i>
                 </button>
 
                 <FiltroCusto filtrarCustos={(custos) => this.setState({ custos: custos, messages: false, errors: false })} />
 
                 <table className='table table-sm table-hover table-light table-bordered mt-2'>
-                    <thead className="bg-dark text-light">
+                    <thead className="bg-table text-light">
                         <tr>
-                            <th>Id</th>
                             <th>Funcionário</th>
                             <th>Departamento</th>
                             <th>Descrição</th>
@@ -87,7 +86,6 @@ class Home extends Component {
                         {this.state.custos.map((value) => {
                             return (
                                 <tr key={value.Id}>
-                                    <td>{value.Id}</td>
                                     <td>{value.Funcionario.Nome}</td>
                                     <td>{value.Departamento.Nome}</td>
                                     <td>{value.Descricao}</td>
