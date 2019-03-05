@@ -43,14 +43,16 @@ class Login extends Component {
         if (tipo === 'nok') {
             this.setState({
                 errors: messages,
-                messages: false
+                messages: false,
+                isLoading: false
             })
         }
 
         else if (tipo === 'ok') {
             this.setState({
                 errors: false,
-                messages: messages                
+                messages: messages,
+                isLoading: false            
             })            
         }
     }
