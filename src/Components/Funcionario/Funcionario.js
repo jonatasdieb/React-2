@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NovoFuncionario from './NovoFuncionario';
 import funcionarioService from '../../Services/FuncionarioService';
 import Messages from '../../Features/ValidationMessages';
+import { logout } from '../../Services/AuthService';
 
 class Funcionario extends Component {
     constructor(props) {
@@ -15,18 +16,22 @@ class Funcionario extends Component {
         }
     }
 
-    loadFuncionarios(){
-         funcionarioService.getFuncionarios()
-                .then(res =>
-                    this.setState({
-                        funcionarios: res.data,
-                        isLoading: false
-                    })
-                )
-                .catch(e => {
-                    if (e.response.status === 401)
-                        window.location.replace("/")
+    loadFuncionarios() {
+        funcionarioService.getFuncionarios()
+            .then(res =>
+                this.setState({
+                    funcionarios: res.data,
+                    isLoading: false
                 })
+            ).catch(e => {
+                if (e.response.status === 401) {
+                    logout();
+                }
+
+                this.setState({
+                    errors: e.response.data
+                })
+            })
     }
     showMessages = (messages, tipo) => {
         if (tipo === 'nok') {
@@ -44,7 +49,7 @@ class Funcionario extends Component {
                 isLoading: true
             })
 
-           this.loadFuncionarios();
+            this.loadFuncionarios();
         }
     }
 

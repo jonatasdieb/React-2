@@ -3,6 +3,7 @@ import custoService from '../Services/CustoService';
 import FiltroCusto from '../Components/Custo/FiltroCusto';
 import NovoCusto from './Custo/NovoCusto';
 import Messages from '../Features/ValidationMessages';
+import { logout } from '../Services/AuthService';
 
 class Home extends Component {
     constructor(props) {
@@ -17,8 +18,8 @@ class Home extends Component {
         }
     }
 
-    loadCustos(){
-          custoService.getCustos()
+    loadCustos() {
+        custoService.getCustos()
             .then(res =>
                 this.setState({
                     custos: res.data,
@@ -27,8 +28,13 @@ class Home extends Component {
                 })
             )
             .catch(e => {
-                if(e.response.status === 401)
-                    window.location.replace("/")
+                if (e.response.status === 401){
+                    logout();
+                }
+                
+                this.setState({
+                    errors: e.response.data
+                })
             })
     }
 
@@ -37,7 +43,7 @@ class Home extends Component {
         this.loadCustos();
     }
 
-    showMessages = (messages, tipo) => {
+    showMessages = (messages, tipo) => {       
         if (tipo === 'nok') {
             this.setState({
                 errors: messages,
@@ -64,15 +70,18 @@ class Home extends Component {
                 <Messages messages={this.state.messages} errors={this.state.errors} />
 
                 <h3 className="text-center mt-4">Despesas</h3>
+                  
+              
+                    <NovoCusto getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />                   
 
-                <NovoCusto getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
+                   
+                    <button type="button" className="btn btn-info" data-toggle="modal" data-target="#modalNovoCusto">
+                       Nova <i class="fas fa-plus text-white"></i>
+                    </button>
+                     &nbsp;    
 
-                <button type="button" className="btn btn-info" data-toggle="modal" data-target="#modalNovoCusto">
-                    Nova Despesa <i class="fas fa-plus text-white"></i>
-                </button>
-
-                <FiltroCusto filtrarCustos={(custos) => this.setState({ custos: custos, messages: false, errors: false })} />
-
+                    <FiltroCusto filtrarCustos={(custos) => this.setState({ custos: custos, messages: false, errors: false })} />
+              
                 <table className='table table-sm table-hover table-light table-bordered mt-2'>
                     <thead className="bg-table text-light">
                         <tr>

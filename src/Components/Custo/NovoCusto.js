@@ -9,8 +9,7 @@ class NovoCusto extends Component {
 
         this.state = {
             departamentos: [],
-            funcionarios: [],
-            redirect: false
+            funcionarios: []           
         }
     }
 

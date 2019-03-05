@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Home from './Components/Home';
 import Departamento from './Components/Departamento/Departamento';
 import Funcionario from './Components/Funcionario/Funcionario';
-import { getUsername } from './Services/AuthService';
 import { logout } from './Services/AuthService';
 
 class App extends Component {

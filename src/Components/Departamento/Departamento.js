@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import NovoDepartamento from './NovoDepartamento';
 import departamentoService from '../../Services/DepartamentoService';
 import Messages from '../../Features/ValidationMessages';
-import Login from '../Autenticacao/Login';
-import { Redirect } from 'react-router-dom';
+import { logout } from '../../Services/AuthService';
+
 
 class Departamento extends Component {
     constructor(props) {
@@ -17,15 +17,20 @@ class Departamento extends Component {
         }
     }
 
-    loadDepartamentos(){
+    loadDepartamentos() {
         departamentoService.getDepartamentos()
             .then(res => this.setState({
                 departamentos: res.data,
                 isLoading: false
             }))
             .catch(e => {
-                if(e.response.status === 401)
-                    window.location.replace("/")
+                if (e.response.status === 401) {
+                    logout();
+                }
+
+                this.setState({
+                    errors: e.response.data
+                })
             })
     }
 
@@ -63,7 +68,7 @@ class Departamento extends Component {
 
                 <NovoDepartamento getMessages={(messages, tipo) => this.showMessages(messages, tipo)}></NovoDepartamento>
 
-              <table className='table table-sm table-hover table-light table-bordered mt-2'>
+                <table className='table table-sm table-hover table-light table-bordered mt-2'>
                     <thead className="bg-table text-light">
                         <tr>
                             <th>Id</th>
