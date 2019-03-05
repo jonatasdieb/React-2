@@ -56,7 +56,9 @@ class Login extends Component {
                 <div className="row justify-content-md-center">
 
                 <Messages messages={this.state.messages} errors={this.state.errors} />
-                  
+                
+                {/* modal de cadastro de usuários */}
+                <CadastrarUsuario getMessages={(messages, tipo) => this.showMessages(messages, tipo)} /> 
                 </div>
                 <div className="row justify-content-md-center">
                     <h3>Efetuar login</h3>
@@ -81,7 +83,7 @@ class Login extends Component {
                         </div>
                     </form>
                 </div>
-                <CadastrarUsuario getMessages={(messages, tipo) => this.showMessages(messages, tipo)} /> 
+              
             </section>
         )
     }
