@@ -10,6 +10,7 @@ class Login extends Component {
         super(props);
 
         this.state = {
+            isLoading: false,
             messages: false,
             errors: false
         }
@@ -17,6 +18,11 @@ class Login extends Component {
 
     login = (e) => {
         e.preventDefault();
+
+        this.setState({
+            isLoading: true
+        })
+
         userService.login({
             username: this.refs.username.value,
             password: this.refs.password.value
@@ -27,7 +33,8 @@ class Login extends Component {
         ).catch(() =>
             this.setState({
                 errors: [{message: "Dados de autenticação incorretos."}],
-                messages: false
+                messages: false,
+                isLoading: false
             })
         )
     }
@@ -43,8 +50,7 @@ class Login extends Component {
         else if (tipo === 'ok') {
             this.setState({
                 errors: false,
-                messages: messages,
-                isLoading: true
+                messages: messages                
             })            
         }
     }
@@ -83,7 +89,12 @@ class Login extends Component {
                         </div>
                     </form>
                 </div>
-              
+                {
+                    this.state.isLoading &&
+                    <div className="progress">
+                        <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style={{ "width": "100%" }}>Buscando seus dados...</div>
+                    </div>
+                }
             </section>
         )
     }
