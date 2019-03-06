@@ -4,7 +4,9 @@ import api from '../../Services/DepartamentoService';
 
 class NovoDepartamento extends Component {
 
-    novoDepartamento = () => {
+    novoDepartamento = (e) => {
+        e.preventDefault();
+        
         const departamento = {
             Nome: this.refs.nome.value
         }
@@ -27,12 +29,12 @@ class NovoDepartamento extends Component {
     render() {
         return (
             <div className='float-right'>
-                <form className='form-inline'>
+                <form className='form-inline' onSubmit={this.novoDepartamento}>
                     <div className="form-group">
                         <label>Novo departamento: &nbsp;</label>
                         <input ref='nome' type="text" className="form-control" placeholder="Nome do departamento" />
                     </div>
-                    &nbsp; <button type="button" onClick={this.novoDepartamento} className="btn btn-succ">Salvar <i class="fas fa-check text-white"></i></button>
+                    &nbsp; <button type="submit" className="btn btn-succ">Salvar <i class="fas fa-check text-white"></i></button>
                 </form>
             </div>
 
