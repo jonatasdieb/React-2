@@ -32,7 +32,7 @@ class Login extends Component {
             window.location.reload()
         ).catch(() =>
             this.setState({
-                errors: [{message: "Dados de autenticação incorretos."}],
+                errors: [{ message: "Dados de autenticação incorretos." }],
                 messages: false,
                 isLoading: false
             })
@@ -52,8 +52,8 @@ class Login extends Component {
             this.setState({
                 errors: false,
                 messages: messages,
-                isLoading: false            
-            })            
+                isLoading: false
+            })
         }
     }
 
@@ -61,12 +61,34 @@ class Login extends Component {
     render() {
         return (
             <section>
+                    <div className="row mt-3">
+                        <div className="col-12">
+                            {
+                                this.state.errors &&
+                                <div class="alert alert-danger" role="alert">
+                                    <ul>
+                                        {this.state.errors.map((value, index) =>
+                                            <li key={index}>{value.message}</li>
+                                        )}
+                                    </ul>
+                                </div>
+                            }
+                            {
+                                this.state.messages &&
+                                <div class="alert alert-success" role="alert">
+                                    <ul>
+                                        <li>{this.state.messages}</li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
                 <div className="row justify-content-md-center">
 
-                <Messages messages={this.state.messages} errors={this.state.errors} />
                 
-                {/* modal de cadastro de usuários */}
-                <CadastrarUsuario getMessages={(messages, tipo) => this.showMessages(messages, tipo)} /> 
+                    {/* modal de cadastro de usuários */}
+                    <CadastrarUsuario getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
                 </div>
                 <div className="row justify-content-md-center">
                     <h3>Efetuar login</h3>

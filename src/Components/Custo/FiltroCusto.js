@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import custoService from '../../Services/CustoService';
-import funcionarioService from '../../Services/FuncionarioService';
-import { logout } from '../../Services/AuthService';
+import { connect } from 'react-redux';
+import * as custoActions from '../../Store/Custo/actions';
+import * as funcionarioActions from '../../Store/Funcionario/actions';
 
 class FiltroCusto extends Component {
     constructor(props) {
@@ -11,42 +11,13 @@ class FiltroCusto extends Component {
             tipoFiltro: false,
             custoFiltro: [],
         }
-    }
-
-    loadCustos() {
-        custoService.getCustos()
-            .then(res => this.props.filtrarCustos(res.data))
-            .catch(e => {
-                if (e.response.status === 401)
-                    logout()
-            })
-    }
-
-    loadCustoByDescricao(descricao) {
-        custoService.getCustoByDescricao(descricao)
-            .then(res => this.props.filtrarCustos(res.data))
-            .catch(e => {
-                if (e.response.status === 401)
-                    logout()
-            })
-    }
-
-    loadCustoByFuncionarioId(id) {
-        custoService.getCustoByFuncionarioId(id)
-            .then(res => this.props.filtrarCustos(res.data))
-            .catch(e => {
-                if (e.response.status === 401)
-                    logout()
-            })
-    }
+    }    
 
     loadFuncionarios() {
-        funcionarioService.getFuncionarios().then(res => this.setState({
-            tipoFiltro: 'funcionario',
-            custoFiltro: res.data
-        })).catch(e => {
-            if (e.response.status === 401)
-                logout()
+        this.props.getFuncionarios()
+        
+        this.setState({
+            tipoFiltro: 'funcionario'       
         })
     }
 
@@ -60,26 +31,30 @@ class FiltroCusto extends Component {
         }
         else if (this.refs.filtro.value === 'funcionario') {
             this.loadFuncionarios();
+        } else {
+            this.setState({
+                tipoFiltro: false
+            })
         }
     }
 
     filtrar = (e) => {
         e.preventDefault();
-        if (this.state.tipoFiltro === 'funcionario') {
-            console.log(this.refs.filtroId.value);
-            this.loadCustoByFuncionarioId(this.refs.filtroId.value)
+
+        if (this.state.tipoFiltro === 'funcionario') { 
+            this.props.getCustosByFuncionarioId(this.refs.filtroId.value)
         }
         else if (this.state.tipoFiltro === 'descricao') {
 
             //se a descricao for vazia, retornará todos os custos
             if (this.refs.descricao.value === '') {
-                this.loadCustos();
+                this.props.getCustos()
             } else {
-                this.loadCustoByDescricao(this.refs.descricao.value);
+                this.props.getCustosByDescricao(this.refs.descricao.value);
             }
         }
         else {
-            this.loadCustos();
+            this.props.getCustos()
         }
     }
 
@@ -89,7 +64,7 @@ class FiltroCusto extends Component {
                 Filtrar por: &nbsp;
             <div className='form-group'>
                     <select ref='filtro' onChange={this.onChange} className='custom-select'>
-                        <option> Selecionar </option>
+                        <option value='0'> Selecionar </option>
                         <option value="funcionario"> Funcionário </option>
                         <option value="descricao"> Descrição </option>
                     </select>
@@ -98,7 +73,7 @@ class FiltroCusto extends Component {
                     {
                         this.state.tipoFiltro === 'funcionario' &&
                         <select ref='filtroId' className='custom-select'>
-                            {this.state.custoFiltro.map(value =>
+                            {this.props.funcionarios.data.map(value =>
                                 <option key={value.Id} value={value.Id}> {value.Nome} | {value.Departamento.Nome}</option>
                             )}
                         </select>
@@ -117,4 +92,14 @@ class FiltroCusto extends Component {
 
 }
 
-export default FiltroCusto;
+const mapStateToProps = state => ({
+    custos: state.custos,
+    funcionarios: state.funcionarios
+})
+
+const mapDispatchToProps = {
+    ...custoActions,
+    ...funcionarioActions
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FiltroCusto);

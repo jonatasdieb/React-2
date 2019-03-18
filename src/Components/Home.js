@@ -1,86 +1,40 @@
 import React, { Component } from 'react';
-import custoService from '../Services/CustoService';
+import { connect } from 'react-redux';
+import * as custoActions from '../Store/Custo/actions';
+
 import FiltroCusto from '../Components/Custo/FiltroCusto';
 import NovoCusto from './Custo/NovoCusto';
-import Messages from '../Features/ValidationMessages';
-import { logout } from '../Services/AuthService';
+
+
+
 
 class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false,
-            tipoFiltro: false,
-            custoFiltro: [],
-            custos: [],
-            messages: false,
-            errors: false
-        }
-    }
-
+   
     loadCustos() {
-        custoService.getCustos()
-            .then(res =>
-                this.setState({
-                    custos: res.data,
-                    tipoFiltro: false,
-                    isLoading: false
-                })
-            )
-            .catch(e => {
-                if (e.response.status === 401){
-                    logout();
-                }
-                
-                this.setState({
-                    errors: e.response.data
-                })
-            })
+       
     }
 
     componentDidMount() {
-        this.setState({ isLoading: true });
-        this.loadCustos();
+       this.props.getCustos()
     }
 
-    showMessages = (messages, tipo) => {       
-        if (tipo === 'nok') {
-            this.setState({
-                errors: messages,
-                messages: false
-            })
-        }
-
-        else if (tipo === 'ok') {
-            this.setState({
-                errors: false,
-                messages: messages,
-                isLoading: true
-            })
-        }
-
-        this.loadCustos();
-
-    }
+   
 
     render() {
         return (
             <div>
 
-                <Messages messages={this.state.messages} errors={this.state.errors} />
-
                 <h3 className="text-center mt-4">Despesas</h3>
                   
               
-                    <NovoCusto getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />                   
-
+                    <NovoCusto />    
                    
                     <button type="button" className="btn btn-info" data-toggle="modal" data-target="#modalNovoCusto">
-                       Nova <i class="fas fa-plus text-white"></i>
+                       Nova <i className="fas fa-plus text-white"></i>
                     </button>
                      &nbsp;    
 
-                    <FiltroCusto filtrarCustos={(custos) => this.setState({ custos: custos, messages: false, errors: false })} />
+                    <FiltroCusto />
               
                 <table className='table table-sm table-hover table-light table-bordered mt-2'>
                     <thead className="bg-table text-light">
@@ -92,7 +46,8 @@ class Home extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.custos.map((value) => {
+                        {
+                            this.props.custos.data.map((value) => {
                             return (
                                 <tr key={value.Id}>
                                     <td>{value.Funcionario.Nome}</td>
@@ -101,12 +56,12 @@ class Home extends Component {
                                     <td>R$ {value.Valor.toFixed(2)}</td>
                                 </tr>
                             )
+                         })
                         }
-                        )}
                     </tbody>
                 </table>
                 {
-                    this.state.isLoading &&
+                    this.props.custos.isLoading &&
                     <div className="row justify-content-center ">
                         <div className="spinner-border text-danger mt-5" role="status">
                             <span className="sr-only">Loading...</span>
@@ -118,4 +73,12 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+    custos: state.custos
+})
+
+const mapDispatchToProps = {
+    ...custoActions
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

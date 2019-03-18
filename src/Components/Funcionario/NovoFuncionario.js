@@ -1,34 +1,18 @@
 import React, { Component } from 'react';
-import funcionarioService from '../../Services/FuncionarioService';
-import departamentoService from '../../Services/DepartamentoService';
+
+import { connect } from 'react-redux';
+import * as funcionarioActions from '../../Store/Funcionario/actions';
+import * as departamentoActions from '../../Store/Departamento/actions';
 
 
 class NovoFuncionario extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            departamentos: []
-        }
-    }
 
     novoFuncionario = () => {
-        funcionarioService.novoFuncionario({
+
+        this.props.novoFuncionario({
             Nome: this.refs.nome.value,
             DepartamentoId: this.refs.departamento.value
         })
-            .then(res =>
-                this.props.getMessages(res.data, "ok"))
-            .catch(error => {
-                if (error.response.status === 401) {
-                    window.location.replace("/")
-                } else {
-                    this.props.getMessages(error.response.data, "nok")
-                }
-            })
-
-
-
 
         //limpa formulários
         this.refs.nome.value = '';
@@ -36,10 +20,7 @@ class NovoFuncionario extends Component {
     }
 
     componentDidMount() {
-        departamentoService.getDepartamentos()
-            .then(res => this.setState({
-                departamentos: res.data
-            }))
+        this.props.getDepartamentos();
     }
 
     render() {
@@ -53,7 +34,7 @@ class NovoFuncionario extends Component {
                     <div className="form-group">
                         <select ref='departamento' className='custom-select'>
                             <option value=''>Selecione um departamento</option>
-                            {this.state.departamentos.map((value) => {
+                            {this.props.departamentos.data.map((value) => {
                                 return (
                                     <option key={value.Id} value={value.Id}>{value.Nome}</option>
                                 )
@@ -69,4 +50,16 @@ class NovoFuncionario extends Component {
     }
 }
 
-export default NovoFuncionario;
+const mapStateToProps = state => ({
+    departamentos: state.departamentos,
+    funcionarios: state.funcionarios
+});
+
+const mapDispatchToProps = {
+    ...funcionarioActions,
+    ...departamentoActions
+}
+    
+// bindActionCreators(funcionarioActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(NovoFuncionario);

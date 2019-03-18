@@ -1,28 +1,20 @@
 import React, { Component } from 'react';
-import api from '../../Services/DepartamentoService';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as departamentoActions from '../../Store/Departamento/actions';
+
 
 
 class NovoDepartamento extends Component {
 
     novoDepartamento = (e) => {
-        e.preventDefault();
-        
-        const departamento = {
+        e.preventDefault();        
+
+        this.props.novoDepartamento({
             Nome: this.refs.nome.value
-        }
+        });
 
-        api.novoDepartamento(departamento)
-            .then(res =>
-                this.props.getMessages(res.data, "ok"))
-            .catch(error => {
-                if (error.response.status === 401) {
-                    window.location.replace("/")
-                } else {
-                    this.props.getMessages(error.response.data, "nok")
-                }
-            })
-
-        //limpa formulário
         this.refs.nome.value = '';
     }
 
@@ -42,4 +34,11 @@ class NovoDepartamento extends Component {
     }
 
 }
-export default NovoDepartamento;
+const mapStateToProps = state => ({
+    departamentos: state.departamentos
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(departamentoActions, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(NovoDepartamento);

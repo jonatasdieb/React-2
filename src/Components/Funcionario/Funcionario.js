@@ -1,76 +1,23 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import NovoFuncionario from './NovoFuncionario';
-import funcionarioService from '../../Services/FuncionarioService';
-import Messages from '../../Features/ValidationMessages';
-import { logout } from '../../Services/AuthService';
+import * as funcionarioActions from '../../Store/Funcionario/actions';
 
-class Funcionario extends Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            isLoading: false,
-            funcionarios: [],
-            errors: false,
-            messages: false
-        }
-    }
 
-    loadFuncionarios() {
-        funcionarioService.getFuncionarios()
-            .then(res =>
-                this.setState({
-                    funcionarios: res.data,
-                    isLoading: false
-                })
-            ).catch(e => {
-                if (e.response.status === 401) {
-                    logout();
-                }
+class Funcionario extends Component {  
 
-                this.setState({
-                    errors: e.response.data
-                })
-            })
-    }
-    showMessages = (messages, tipo) => {
-        if (tipo === 'nok') {
-            this.setState({
-                errors: messages,
-                messages: false
-            })
-        }
-
-        else if (tipo === 'ok') {
-
-            this.setState({
-                errors: false,
-                messages: messages,
-                isLoading: true
-            })
-
-            this.loadFuncionarios();
-        }
-    }
-
-    componentDidMount() {
-        this.setState({
-            isLoading: true
-        })
-
-        this.loadFuncionarios();
+    componentDidMount(){          
+        this.props.getFuncionarios();
     }
 
     render() {
         return (
-            <div>
-
-                <Messages messages={this.state.messages} errors={this.state.errors} />
-
-                <h3 className="text-center mt-4">Funcionários</h3>
-
-                <NovoFuncionario getMessages={(messages, tipo) => this.showMessages(messages, tipo)} />
-
+            <div>   
+                <h3 className="text-center mt-4">Funcionários</h3>               
+                <NovoFuncionario/>
+                
                 <table className='table table-sm table-hover table-light table-bordered mt-2'>
                     <thead className="bg-table text-light">
                         <tr>
@@ -81,7 +28,7 @@ class Funcionario extends Component {
 
                     </thead>
                     <tbody>
-                        {this.state.funcionarios.map(value => {
+                        {this.props.funcionarios.data.map(value => {
                             return (
                                 <tr key={value.Id}>
                                     <td>{value.Id}</td>
@@ -92,8 +39,9 @@ class Funcionario extends Component {
                         })}
                     </tbody>
                 </table>
+               
                 {
-                    this.state.isLoading &&
+                    this.props.funcionarios.isLoading &&
                     <div className="row justify-content-center ">
                         <div className="spinner-border text-danger mt-5" role="status">
                             <span className="sr-only">Loading...</span>
@@ -103,7 +51,13 @@ class Funcionario extends Component {
             </div >
         )
     }
-
 }
 
-export default Funcionario;
+const mapStateToProps = state => ({ 
+    funcionarios: state.funcionarios
+  });  
+
+const mapDispatchToProps = dispatch => 
+  bindActionCreators(funcionarioActions, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Funcionario);

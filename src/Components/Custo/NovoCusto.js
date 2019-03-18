@@ -1,38 +1,18 @@
 import React, { Component } from 'react';
-import custoService from '../../Services/CustoService';
-import funcionarioService from '../../Services/FuncionarioService';
-import departamentoService from '../../Services/DepartamentoService';
+import { connect } from 'react-redux';
 
-class NovoCusto extends Component {
-    constructor(props) {
-        super(props);
+import * as custoActions from '../../Store/Custo/actions';
+import * as departamentoActions from '../../Store/Departamento/actions';
+import * as funcionarioActions from '../../Store/Funcionario/actions';
 
-        this.state = {
-            departamentos: [],
-            funcionarios: []           
-        }
-    }
+class NovoCusto extends Component {  
 
     componentDidMount() {
-        departamentoService.getDepartamentos().then(res =>
-            this.setState({
-                departamentos: res.data
-            }))
-            .catch(e => {
-                if (e.response.status === 401)
-                    window.location.replace("/")
-            })
+        this.props.getDepartamentos()
     }
 
     onChange = () => {
-        funcionarioService.getFuncionarioByDepartamentoId(this.refs.departamento.value)
-            .then(res => this.setState({
-                funcionarios: res.data
-            }))
-            .catch(e => {
-                if (e.response.status === 401)
-                    window.location.replace("/")
-            })
+        this.props.getFuncionariosByDepartamentoId(this.refs.departamento.value)            
     }
 
     novoCusto = () => {
@@ -43,12 +23,7 @@ class NovoCusto extends Component {
             Valor: this.refs.valor.value,
         }
 
-        custoService.novoCusto(custo)
-            .then(res =>
-                this.props.getMessages(res.data, "ok"))
-            .catch(error =>
-                this.props.getMessages(error.response.data, "nok")
-            )
+        this.props.novoCusto(custo)           
 
         //limpa formulário
         this.refs.departamento.value = '';
@@ -75,7 +50,7 @@ class NovoCusto extends Component {
                                         <label>Departamento</label>
                                         <select ref='departamento' className='custom-select' onChange={this.onChange} required>
                                             <option value=''>-</option>
-                                            {this.state.departamentos.map((value) => {
+                                            {this.props.departamentos.data.map((value) => {
                                                 return (
                                                     <option key={value.Id} value={value.Id}>{value.Nome}</option>
                                                 )
@@ -86,7 +61,7 @@ class NovoCusto extends Component {
                                         <label>Funcionario</label>
                                         <select ref='funcionario' className='custom-select' required>
                                             <option value=''>-</option>
-                                            {this.state.funcionarios.map((value) => {
+                                            {this.props.funcionarios.data.map((value) => {
                                                 return (
                                                     <option key={value.Id} value={value.Id}>{value.Nome}</option>
                                                 )
@@ -116,4 +91,15 @@ class NovoCusto extends Component {
     }
 }
 
-export default NovoCusto;
+const mapStateToProps = state => ({
+    departamentos: state.departamentos,
+    funcionarios: state.funcionarios
+})
+
+const mapDispatchToProps = {
+    ...custoActions,
+    ...departamentoActions,
+    ...funcionarioActions
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NovoCusto);
